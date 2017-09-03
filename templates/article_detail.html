@@ -1,0 +1,78 @@
+{% extends "index.html" %}
+{% block page_title %}{{ title }} | {{ block.super }}{% endblock page_title %}
+{% block content %}
+<div class="container-fluid top-space">
+	<div class="row">
+		<!-- Body content -->
+        <div class="col-md-9 col-md-offset-3">
+            <!-- Messages -->
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {% if 'text-success' in message.tags %}
+                        {{ message|safe }}
+                    {% else %}
+                        {{ message }}
+                    {% endif %}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <!-- Messages ends -->
+            <div class="col-md-9 card top-space">
+                <div class="card-header">
+                        <h4 class="card-title">
+                            <a href="">{{ article.title }}<small> {{ article.timestamp }} </small><!-- span class="badge tag amber">New</span --></a>
+                        </h4>
+                        {% if request.user.is_superuser or article.user == request.user %}
+                        <ul class="list-inline">
+                            <li>
+                                <a class="card-link" href="{% url 'blog:update-article' article.id %}">
+                                <span class="glyphicon glyphicon-pencil"></span><span class="text-primary"> Edit</span>
+                                </a>
+                            </li>
+                            {% if request.user.is_superuser %}
+                            <li>
+                                <a class="card-link" href="{% url 'blog:delete' article.id %}">
+                                <span class="glyphicon glyphicon-remove-sign"></span><span class="text-danger"> Delete</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+
+                </div>
+                <hr>
+                {% if article.file %}
+                <div class="card-footer">
+                    <ul class="list-inline">
+                        <li class="card-link">
+                            <img src="{{ article.file.url }}" class="img-responsive"/>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+                <p><b>{{ article.highlight|linebreaks }}</b></p>
+                <p>{{ article.description|linebreaks }}</p>
+            </div>
+            <div class="col-md-9 card top-space">
+                <h5>Comment</h5>
+                <form method="POST" action="">{% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" type="text" name="comment"></textarea>
+                        <br>
+                        <input type="submit" value="Comment" class="btn btn-success">
+                    </div>
+                </form>
+                <br>
+                {% for comment in comments %}
+                <div class="col-md-7 top-space">
+                    <p>{{ comment.comment|linebreaks }}<br>{{ comment.timestamp|timesince }} ago :<b>{{ comment.user }}</b></p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+		<!-- Body content ends -->
+	</div>
+</div>
+{% endblock content %}

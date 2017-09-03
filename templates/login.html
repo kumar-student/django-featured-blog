@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block page_title %}{{ title }} | {{ block.super }}{% endblock page_title %}
+{% block content %}
+<div class="container-fluid top-space">
+	<div class="row">
+		<!-- Body content -->
+        <div class="col-md-4 card col-md-offset-4">
+            <!-- Login forms -->
+		    <div class="card-header">
+		    	<ul class="list-inline">
+                    <li><h2 class="pull-left">{{ title }}</h2></li>
+                </ul>
+            </div>
+            <hr>
+			<div class="col-md-12 text-center">
+				{% if not request.user.is_authenticated %}
+				<h3>This site provides gmail login only...</h3>
+				<a href="{% url 'social:begin' 'google-oauth2' %}"><button class="btn btn-primary btn-min-block">Login with google</button></a>
+				{% endif %}
+			</div>
+        </div>
+		<!-- Body content ends -->
+	</div>
+</div>
+{% endblock content %}

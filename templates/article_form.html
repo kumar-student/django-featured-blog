@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+
+{% block page_title %}{{ title }} | {{ block.super }}{% endblock page_title %}
+{% block content %}
+<div class="container-fluid top-space">
+	<div class="row">
+		<!-- Body content -->
+        <div class="col-md-6 card col-md-offset-3">
+            <!-- Login forms -->
+		    <div class="card-header">
+		    	<ul class="list-inline">
+                    <li><h4 class="pull-left">Create or Edit an article</h4></li>
+                </ul>
+            </div>
+            <hr>
+            <!-- Form starts -->
+			<form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+				{{ form|crispy }}
+				<input type="submit" value="Save article" class="btn btn-success">
+			</form>
+		    <!-- form method="POST" action="">{% csrf_token %}
+		    	<div class="col-md-12">
+                    <div class="md-form">
+                        <input value="" type="text" name="title" id="form6" class="form-control" placeholder="Task title">
+                        <label class="active" for="form6">Task title</label>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="md-form">
+                        <textarea name="description" type="text" id="form7" class="md-textarea"></textarea>
+                        <label for="form7">Description</label>
+                    </div>
+
+                </div>
+				<div class="col-md-12">
+                    <div class="md-form btn-group">
+                        <label class="btn btn-warning"><input type="checkbox" autocomplete="off"> Draft</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="md-form">
+                        <input name="file" type="file" id="form7">
+                    </div>
+
+                </div>
+
+                	<button name="submit" type="submit" value="submit" class="btn btn-success">
+                		Submit
+                	</button>
+                	<button name="reset" type="reset" value="reset" class="btn btn-default">
+                		Reset
+                	</button>
+
+            </form !-->
+            <!-- Login form ends -->
+        </div>
+		<!-- Body content ends -->
+	</div>
+</div>
+{% endblock content %}

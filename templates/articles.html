@@ -1,0 +1,80 @@
+{% extends "index.html" %}
+{% block page_title %}{{ title }} | {{ block.super }}{% endblock page_title %}
+{% block content %}
+<div class="container-fluid top-space">
+	<div class="row col-md-offset-1">
+		<!-- Body content -->
+        <!-- Messages -->
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            <!-- Messages ends -->
+		<div class="col-md-3 text-xs-left">
+            <h3>Article actions</h3>
+            <a href="{% url 'blog:create-article' %}">
+                <h5>Create an article</h5>
+            </a>
+        </div>
+        <!-- klajsdlkjlfkajsldf -->
+        <!-- div class="panel panel-default">
+            <div class="panel-heading"><h4>What Is Bootstrap?</h4></div>
+            <div class="panel-body">
+          </div>
+        </div -->
+        <!-- jalkjsdkjljasdlkf -->
+        <div class="col-md-9">
+            <ul class="list-inline">
+                <li><h3>Articles</h3></li>
+                <li>
+                    <!-- Paginate controller -->
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if articles.has_previous %}
+                                <a href="?page={{ articles.previous_page_number }}">previous</a>
+                            {% endif %}
+
+                            <span class="current">
+                                Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+                            </span>
+
+                            {% if articles.has_next %}
+                                <a href="?page={{ articles.next_page_number }}">next</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <!-- Paginate controller ends -->
+                </li>
+                <!-- Searchbox starts here -->
+                <li class="col-md-offset-3">
+                    <form method="GET" action="" class="form-inline">
+                        <div class="form-group">
+                        <input class="form-control" type="text" name="search" placeholder="Search articles..." value="{{ request.GET.search }}">
+                        <input type="button" value="Search" class="btn btn-success">
+                        </div>
+                    </form>
+                </li>
+                <!-- Searchbox ends -->
+            </ul>
+            {% for article in articles %}
+            <div class="col-md-9 card top-space">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        <a href="{{ article.get_absolute_url }}">{{ article.title }}<small> {{ article.publish|timesince }} </small><!-- span class="badge tag amber">New</span --></a>
+                    </h4>
+                    <!-- a class="card-link" href="">
+                    <span class="glyphicon glyphicon-save"></span><span class="text-success"> Save</span>
+                    </a -->
+                </div>
+                <hr>
+                <p>{{ article.description|linebreaks|truncatechars:100 }}</p>
+            </div>
+            {% endfor %}
+            </ul>
+        </div>
+		<!-- Body content ends -->
+	</div>
+</div>
+{% endblock content %}
