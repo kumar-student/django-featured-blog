@@ -4,26 +4,33 @@ Note: You must have installed python
 # Project setup
 
   Install pip
-    sudo apt-get install python-pip
+  
+      sudo apt-get install python-pip
 
   Install virtualenv
-    sudo pip install virtuvalenv
+    
+      sudo pip install virtuvalenv
 
   Creating virtualenv
-    virtualenv ENV
+      
+      virtualenv ENV
 
   Activating working enviroment
-    source ENV/bin/activate
+    
+      source ENV/bin/activate
 
   Deactivating working enviroment
-    deactivate
+    
+      deactivate
 
   Start project
-    django-admin startproject backend
+    
+      django-admin startproject backend
 
   Start app
-    cd backend
-    python manage.py startapp blog
+    
+      cd backend
+      python manage.py startapp blog
   
 # Installing requirements of existing project
     pip install -r requirements.txt
@@ -400,5 +407,99 @@ Then run the server
     python manage.py migrate
 
     python manage.runserver
+
+Copy paste the environment variables in terminal
+
+Then open localhost:8000 in the browser
+
+
+# Authentication with gmail
+
+Install social-auth-app-django
   
-Open localhost:8000 in the browser
+    pip install social-auth-app-django
+    
+Add social django to your installed apps
+
+    INSTALLED_APPS = [
+      ..............
+      'blog'      # our blog app
+    ]
+    
+    THIRD_PARTY_APPS = [
+      ..............
+      'social_django'
+    ]
+    
+Migrate database
+  
+    python manage.py migrate
+    
+    
+Configure AUTHENTICATION BACKEND in base.py
+
+    AUTHENTICATION_BACKENDS = (
+      
+      'social_core.backends.google.GoogleOAuth2',
+      
+      'django.contrib.auth.backends.ModelBackend',
+    
+    )
+    
+ Setup google api settings
+ 
+ Open console.google.com account
+ 
+ Go to creadentials option and craete creadentioals with Auth Id for web application
+ 
+ In client credentials, set name of project ex: blog
+ 
+ Set authorized javascript origins
+    
+        http://localhost:8000
+    
+        http://127.0.0.1:8000
+    
+    
+  Set authorized redirect URI
+  
+      http://localhost:8000/google/complete/google-oauth2/
+    
+  You may need to give auth contenst screen value of your gmail address and product name while setup credentials 
+ 
+ Configure authentication creadentials in settings.py
+ 
+      SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['GOOGLEAUTH_CLIENT_ID']
+      
+      SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['GOOGLEAUTH_CLIENT_SECRET']
+ 
+ 
+ Add new enviroment variables
+ 
+      export GOOGLEAUTH_CLIENT_ID='xxxxxxxxxx-hseg60golqphck78q2hfgdsxxxxxxxx.apps.googleusercontent.com'
+      
+      export GOOGLEAUTH_CLIENT_SECRET='uYsmOwxxxxxxxxxxxxxxxxxxx'
+    
+ Url configurations blog/urls.py
+ 
+      urlpatterns = [
+      
+          url(r'^admin/', admin.site.urls),
+          
+          url('^api/v1/', include('social_django.urls', namespace='social')),
+          
+          ...............,
+      
+      ]
+ 
+ 
+ Create a link to google login page in to your template
+ 
+      <a href="{% url 'social:begin' 'google-oauth2' %}">Google+</a>
+      
+ Set login redirect url in base.py
+ 
+      LOGIN_REDIRECT_URL = '/<redirect-url>/'
+      
+      
+  Note: Make sure you enabled Google+ API of your google console librery
