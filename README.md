@@ -446,6 +446,26 @@ Configure AUTHENTICATION BACKEND in base.py
     
     )
     
+ Configure template as fallows
+ 
+     TEMPLATES = [
+          {
+              'BACKEND': 'django.template.backends.django.DjangoTemplates',
+              'DIRS': [os.path.join(os.path.dirname(BASE_DIR), 'templates')],
+              'APP_DIRS': True,
+              'OPTIONS': {
+                  'context_processors': [
+                      'django.template.context_processors.debug',
+                      'django.template.context_processors.request',
+                      'django.contrib.auth.context_processors.auth',
+                      'django.contrib.messages.context_processors.messages',
+                      'social_django.context_processors.backends',
+                      'social_django.context_processors.login_redirect',
+                  ],
+              },
+          },
+      ]
+    
  Setup google api settings
  
  Open console.google.com account
