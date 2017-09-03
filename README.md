@@ -1,4 +1,4 @@
-Note: You must have installed python
+Note: You must have installed python. And the code is for local setup
 
 
 # Project setup
@@ -446,7 +446,7 @@ Configure AUTHENTICATION BACKEND in base.py
     
     )
     
- Configure template as fallows
+ Configure template as fallows in blog/blog/settings/local.py
  
      TEMPLATES = [
           {
@@ -487,7 +487,7 @@ Configure AUTHENTICATION BACKEND in base.py
     
   You may need to give auth contenst screen value of your gmail address and product name while setup credentials 
  
- Configure authentication creadentials in settings.py
+ Configure authentication creadentials in base.py
  
       SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['GOOGLEAUTH_CLIENT_ID']
       
