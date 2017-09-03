@@ -33,8 +33,20 @@ Note: You must have installed python. And the code is for local setup
       python manage.py startapp blog
   
 # Installing requirements of existing project
+
     pip install -r requirements.txt
 
+# App settings blog/blog/settings/base.py
+    INSTALLED_APPS = [
+        .............,
+
+        'blog'
+    ]
+
+# Project urls blog/blog/urls.py
+    urlpatterns = [
+        url(r'^',include('blog.urls',namespace='blog')),
+    ]
 
 # Dtabase settings
 
@@ -506,7 +518,7 @@ Configure AUTHENTICATION BACKEND in base.py
       
           url(r'^admin/', admin.site.urls),
           
-          url('^api/v1/', include('social_django.urls', namespace='social')),
+          url('^google/', include('social_django.urls', namespace='social')),
           
           ...............,
       
