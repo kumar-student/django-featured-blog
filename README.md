@@ -174,6 +174,10 @@ Note: You must have installed python. And the code is for local setup
   |------------- requirements.txt
   
   
+# Collect static files
+
+    python manage.py collectstatic
+  
 # base.py
   
   import os
