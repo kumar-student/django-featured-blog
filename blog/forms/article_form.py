@@ -4,6 +4,11 @@ from blog.models.articles import Article
 
 class ArticleForm(forms.ModelForm):
     # publish = forms.DateField(widget=SelectDateWidget())
+    publish_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date'}
+        )
+    )
     class Meta:
         model = Article
         fields = [
